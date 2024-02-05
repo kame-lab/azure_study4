@@ -61,15 +61,18 @@ METADATA
     "effect": "[parameters('effect')]",
     "details": {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "storageAccount",
       "roleDefinitionIds": [
         "${data.azurerm_role_definition.definition1.id}",
         "${data.azurerm_role_definition.definition2.id}",
         "${data.azurerm_role_definition.definition3.id}"
       ],
       "existenceCondition": {
-        "field": "Microsoft.Storage/storageAccounts/allowBlobPublicAccess",
-        "equals": true
+          "allOf": [
+              {
+                  "field": "Microsoft.Storage/storageAccounts/allowBlobPublicAccess",
+                  "equals": false
+              }
+          ]
       },
       "deployment": {
         "properties": {
