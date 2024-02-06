@@ -26,34 +26,6 @@ METADATA
       {
         "field": "type",
         "equals": "Microsoft.Storage/storageAccounts"
-      },
-      {
-        "not": {
-          "allOf": [
-            {
-              "field": "id",
-              "contains": "/resourceGroups/aro-"
-            },
-            {
-              "anyOf": [
-                {
-                  "field": "name",
-                  "like": "cluster*"
-                },
-                {
-                  "field": "name",
-                  "like": "imageregistry*"
-                }
-              ]
-            }
-          ]
-        }
-      },
-      {
-        "not": {
-          "field": "Microsoft.Storage/storageAccounts/allowBlobPublicAccess",
-          "equals": "false"
-        }
       }
     ]
   },
@@ -67,12 +39,12 @@ METADATA
         "${data.azurerm_role_definition.definition3.id}"
       ],
       "existenceCondition": {
-          "allOf": [
-              {
-                  "field": "Microsoft.Storage/storageAccounts/allowBlobPublicAccess",
-                  "equals": false
-              }
-          ]
+        "allOf": [
+          {
+            "field": "Microsoft.Storage/storageAccounts/allowBlobPublicAccess",
+            "equals": "false"
+          }
+        ]
       },
       "deployment": {
         "properties": {
@@ -90,7 +62,7 @@ METADATA
             },
             "resources": [
               {
-                "name": "[concat(parameters('resourceName'))]",
+                "name": "[parameters('resourceName')]",
                 "location": "[parameters('location')]",
                 "type": "Microsoft.Storage/storageAccounts",
                 "apiVersion": "2023-01-01",
